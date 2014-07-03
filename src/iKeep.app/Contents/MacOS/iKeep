@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# iKeep v.0.1.0
+# Copyright (c) 2014 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
+# https://github.com/leonardw/ikeep
+# MIT Licensed
+
+shdir=$(dirname "$0")
+exec /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --no-default-browser-check --app="https://keep.google.com" --user-data-dir="$shdir/../Profile" $@
