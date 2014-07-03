@@ -4,7 +4,7 @@ iKeep is a standalone Mac OSX application for Google Keep.
 
 ##Download
 * Latest development version
-[0.1.0](/leonardw/ikeep/blob/dev/dist/iKeep-0.1.0.zip)
+[0.1.0](https://github.com/leonardw/ikeep/blob/dev/dist/iKeep-0.1.0.zip)
 
 
 ##License
