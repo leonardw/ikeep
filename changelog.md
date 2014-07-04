@@ -6,7 +6,7 @@ Improvements:
 * Makes an effort to locate an installation of Google Chrome
 
 Many bugfixes:
-* Security fix: profile no longer in app itself, so cannot not be shared between users
+* Security fix: profile moved out of the app itself, so it's no longer shared between users
 * Warn and quit if Google Chrome is not found
 * Remove prompt about default browser choice on first start
 
