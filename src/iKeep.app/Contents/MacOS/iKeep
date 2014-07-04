@@ -1,9 +1,73 @@
 #!/bin/bash
 
-# iKeep v.0.1.0
+# iKeep v.1.0.0
 # Copyright (c) 2014 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
 # https://github.com/leonardw/ikeep
 # MIT Licensed
+cmdargs=$@
 
-shdir=$(dirname "$0")
-exec /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --no-default-browser-check --app="https://keep.google.com" --user-data-dir="$shdir/../Profile" $@
+appname=iKeep
+appver=1.0.0
+copyyr=2014
+homeurl="https://github.com/leonardw/ikeep"
+
+profiledir=$HOME/Library/Application\ Support/$appname/Chrome
+firstrun="$profiledir/First Run"
+runprefix="$profiledir/firstrun-"
+versionrun="${runprefix}${appname}-$appver"
+app="$(dirname "$0")/../.."
+
+# Find Chrome runtime
+userchrome=$HOME/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+globalchrome=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+peerchrome=$app/../Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+chrome=""
+if [[ -e "$userchrome" ]]
+then
+	chrome="$userchrome"
+elif [[ -e "$globalchrome" ]]
+then
+	chrome="$globalchrome"
+elif [[ -e "$peerchrome" ]]
+then
+	chrome="$peerchrome"
+else
+	chrome=$(which "Google Chrome")
+fi
+
+popalert() {
+out=$(osascript <<EOT
+	tell application "System Events"
+		display alert "$1"
+	end tell
+EOT)
+return 0
+}
+
+#If can't find Chrome, quit
+if [[ "$chrome" == "" ]]
+then
+	$(popalert "$appname $appver\n\nGoogle Chrome not found!\n\niKeeper requires Google Chrome browser to function. Please install, then retry again.")
+	exit 1
+fi
+
+# Remove if profile dir already used by something else
+if [[ -e "$profiledir" ]] && [[ -h "$profiledir" || ! -d "$profiledir" ]]
+then
+	rm -fr "$profiledir"
+fi
+# Create profile dir if none exist
+if [[ ! -e "$profiledir" ]]
+then
+	mkdir -p "$profiledir"
+	touch "$firstrun"
+fi
+# First run, show version info
+if [[ ! -e "$versionrun" ]]
+then
+	#rm -f "${runprefix}*"
+	touch "$versionrun"
+	$(popalert "$appname $appver\n\nMIT Licensed\nCopyright (c) $copyyr Leonard Wu\n$homeurl")
+fi
+
+exec "$chrome" --no-default-browser-check --app="https://keep.google.com" --user-data-dir="$profiledir" $cmdargs
