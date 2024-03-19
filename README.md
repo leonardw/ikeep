@@ -1,22 +1,21 @@
-# iKeep - Google Keep on the Mac
+# iKeep - Google Keep for Mac
 
-iKeep is a standalone, hybrid Mac OSX desktop application for Google Keep.
-
+iKeep is a standalone, hybrid macOS desktop application for [Google Keep](https://www.google.com/keep/).
 
 ## Prerequisites
-* Mac OSX
-* Google Chrome must be installed on the system
 
+-   macOS
+-   [Google Chrome](https://www.google.com/chrome/), [Chromium](https://www.chromium.org/Home/) or [Chromium Legacy](https://github.com/blueboxd/chromium-legacy#readme) must be installed on the system
 
 ## Download
-* Latest release version: [1.0.0](https://github.com/leonardw/ikeep/blob/master/dist/iKeep-1.0.0.zip?raw=true)
 
+[Download the latest release of iKeep](https://github.com/leonardw/ikeep/releases/latest)
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2014 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
+Copyright (c) 2024 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

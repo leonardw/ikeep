@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# iKeep v.1.0.0
-# Copyright (c) 2014 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
+# iKeep v.2.0.0
+# Copyright (c) 2024 Leonard Wu <leonard.wu92@alumni.ic.ac.uk>
 # https://github.com/leonardw/ikeep
 # MIT Licensed
 cmdargs=$@
 
 appname=iKeep
-appver=1.0.0
-copyyr=2014
+appver=2.0.0
+copyyr=2024
 homeurl="https://github.com/leonardw/ikeep"
 
 profiledir=$HOME/Library/Application\ Support/$appname/Chrome
@@ -17,23 +17,29 @@ runprefix="$profiledir/firstrun-"
 versionrun="${runprefix}${appname}-$appver"
 app="$(dirname "$0")/../.."
 
-# Find Chrome runtime
-userchrome=$HOME/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-globalchrome=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-peerchrome=$app/../Google\ Chrome.app/Contents/MacOS/Google\ Chrome
-chrome=""
-if [[ -e "$userchrome" ]]
-then
-	chrome="$userchrome"
-elif [[ -e "$globalchrome" ]]
-then
-	chrome="$globalchrome"
-elif [[ -e "$peerchrome" ]]
-then
-	chrome="$peerchrome"
-else
-	chrome=$(which "Google Chrome")
-fi
+SEARCH_DIRS="${HOME}/Applications/:/Applications/:${app}/../"
+SEARCH_BINS="Chromium.app/Contents/MacOS/Chromium:Google Chrome.app/Contents/MacOS/Google Chrome"
+
+findChrome() {
+	local IFS=':'
+	local chromebin=""
+	for dir in ${SEARCH_DIRS}; do
+		for bin in ${SEARCH_BINS}; do
+			if [[ -e "$dir$bin" ]]; then
+				chromebin="$dir$bin"
+				break 2
+			fi
+		done
+	done
+	if [[ "$chromebin" == "" ]]; then
+		for bin in ${SEARCH_BINS}; do
+			local binfile=$(basename "$bin")
+			chromebin=$(which "$binfile")
+			[[ -n "$chromebin" ]] && break
+		done
+	fi
+	echo "$chromebin"
+}
 
 popalert() {
 out=$(osascript <<EOT
@@ -44,10 +50,13 @@ EOT)
 return 0
 }
 
-#If can't find Chrome, quit
+# Find Chrome runtime
+chrome=$(findChrome)
+
+# Quit if Chrome is not found
 if [[ "$chrome" == "" ]]
 then
-	$(popalert "$appname $appver\n\nGoogle Chrome not found!\n\niKeeper requires Google Chrome browser to function. Please install, then retry again.")
+	$(popalert "$appname $appver\n\nChrome browser not found!\n\niKeeper requires Chrome browser to function. Please install Google Chrome, Chromium or Chromium Legacy, then retry again.")
 	exit 1
 fi
 
