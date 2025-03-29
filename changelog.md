@@ -1,5 +1,11 @@
 # Change Log - iKeep
 
+### 2.1.0, 2025-03-29
+
+Improvements:
+
+-   Declare explicit support for Apple Silicon so that Rosetta installation is no longer requested.
+
 ### 2.0.0, 2024-03-19
 
 Improvements:
