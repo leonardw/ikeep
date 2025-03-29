@@ -7,8 +7,8 @@
 cmdargs=$@
 
 appname=iKeep
-appver=2.0.0
-copyyr=2024
+appver=2.1.0
+copyyr=2025
 homeurl="https://github.com/leonardw/ikeep"
 
 profiledir=$HOME/Library/Application\ Support/$appname/Chrome
